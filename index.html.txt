@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Recorder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    🎤 Audio Recorder
+  </header>
+
+  <div class="container">
+
+    <!-- Top Ad -->
+    <div class="ad-box">
+      Advertisement مساحة إعلانية (728x90)
+    </div>
+
+    <h2>Start Recording Your Voice</h2>
+
+    <!-- Buttons -->
+    <button id="startBtn">▶️ Start Recording</button>
+    <button id="stopBtn" disabled>⏹️ Stop Recording</button>
+
+    <!-- Status -->
+    <p id="status">Status: Ready</p>
+
+    <!-- Audio Player -->
+    <audio id="audioPlayback" controls></audio>
+
+    <!-- Download -->
+    <br><br>
+    <a id="downloadLink" style="display:none;">Download Recording</a>
+
+    <!-- Bottom Ad -->
+    <div class="ad-box">
+      Responsive Advertisement
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 Audio Recorder - All Rights Reserved
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
