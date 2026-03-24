@@ -18,9 +18,10 @@
         <div class="container mx-auto flex justify-between items-center">
             <span class="text-2xl font-black tracking-tighter text-blue-500">FREE AUDIO RECORDER</span>
             <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
-                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="index.html" class="hover:text-white transition font-bold text-blue-400">Home</a>
                 <a href="#about" class="hover:text-white transition">How it Works</a>
                 <a href="privacy-policy.html" class="hover:text-white transition">Privacy</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
             </div>
         </div>
     </nav>
@@ -44,9 +45,9 @@
                     <div id="recordIcon" class="w-8 h-8 bg-white rounded-sm group-active:scale-75 transition-transform"></div>
                 </button>
                 
-                <div id="audioContainer" class="w-full transition-all"></div>
+                <div id="audioContainer" class="w-full"></div>
 
-                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl shadow-blue-900/30 flex items-center gap-2 transform transition hover:-translate-y-1">
+                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl flex items-center gap-2 transform transition hover:-translate-y-1">
                     <span>✨ ENHANCE WITH AI</span>
                 </button>
                 
@@ -55,11 +56,8 @@
         </div>
 
         <div id="about" class="max-w-4xl mx-auto space-y-20 mt-24 text-left border-t border-gray-800 pt-20 pb-20">
-            
             <section>
-                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-                    <span class="w-8 h-1 bg-blue-500 inline-block text-blue-500">.</span> High-Fidelity Audio Capture
-                </h2>
+                <h2 class="text-3xl font-bold text-white mb-6">High-Fidelity Audio Capture</h2>
                 <p class="text-gray-400 leading-relaxed text-lg">
                     FreeAudioRecorder.com provides a professional, browser-based solution for capturing high-quality audio without expensive hardware. Using <strong>WebAudio API</strong>, our tool records uncompressed signals directly from your microphone, ensuring your voice remains clear for podcasts, YouTube content, and professional voiceovers.
                 </p>
@@ -69,24 +67,14 @@
                 <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
                     <h3 class="text-xl font-bold text-blue-400 mb-4">Neural Noise Reduction</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Our integrated AI Voice Enhancer uses neural filters to isolate speech and remove background hiss, fans, and ambient noise. Achieve studio-quality sound with a single click, perfectly balanced for clarity.
+                        Our integrated AI Voice Enhancer uses neural filters to isolate speech and remove background hiss, fans, and ambient noise. Achieve studio-quality sound with a single click.
                     </p>
                 </div>
                 <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
                     <h3 class="text-xl font-bold text-blue-400 mb-4">Privacy & Security</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Your privacy is our priority. All audio processing happens <strong>locally in your browser</strong>. Your recordings are never uploaded to our servers, keeping your data 100% private and secure on your device.
+                        Your privacy is our priority. All audio processing happens <strong>locally in your browser</strong>. Your recordings are never uploaded to our servers.
                     </p>
-                </div>
-            </section>
-
-            <section class="text-center">
-                <h3 class="text-2xl font-bold text-white mb-6">Perfect for every creator</h3>
-                <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-                    <span class="bg-gray-800 px-4 py-2 rounded-full italic">#Podcasting</span>
-                    <span class="bg-gray-800 px-4 py-2 rounded-full italic">#ContentCreation</span>
-                    <span class="bg-gray-800 px-4 py-2 rounded-full italic">#Education</span>
-                    <span class="bg-gray-800 px-4 py-2 rounded-full italic">#Voiceovers</span>
                 </div>
             </section>
         </div>
@@ -97,7 +85,7 @@
             <div class="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium text-gray-500">
                 <a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a>
                 <a href="privacy-policy.html" class="hover:text-white transition">Terms of Service</a>
-                <a href="mailto:support@freeaudiorecorder.com" class="hover:text-white transition">Contact Us</a>
+                <a href="contact.html" class="hover:text-white transition font-bold text-gray-300">Contact Us</a>
             </div>
             <p class="text-gray-600 text-[10px] tracking-[0.3em] uppercase">
                 &copy; 2026 FreeAudioRecorder.com | All Rights Reserved
@@ -106,8 +94,7 @@
     </footer>
 
     <script>
-        let mediaRecorder;
-        let audioChunks = [];
+        let mediaRecorder, audioChunks = [];
         let isRecording = false;
 
         const recordBtn = document.getElementById('recordBtn');
@@ -123,9 +110,7 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     mediaRecorder = new MediaRecorder(stream);
                     audioChunks = [];
-
-                    mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
-
+                    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
                     mediaRecorder.onstop = () => {
                         const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
                         const audioUrl = URL.createObjectURL(audioBlob);
@@ -135,16 +120,13 @@
                         downloadBtn.download = "recording.mp3";
                         downloadBtn.classList.remove('hidden');
                     };
-
                     mediaRecorder.start();
                     isRecording = true;
                     status.innerText = "Status: Recording LIVE...";
                     status.classList.add('text-red-500');
                     recordIcon.classList.replace('rounded-sm', 'rounded-full');
                     recordBtn.classList.add('animate-pulse');
-                } catch (err) {
-                    alert("Please allow microphone access!");
-                }
+                } catch (err) { alert("Please allow microphone access!"); }
             } else {
                 mediaRecorder.stop();
                 isRecording = false;
@@ -159,11 +141,10 @@
             status.innerText = "AI Processing: Filtering Noise...";
             aiBtn.innerText = "Applying AI Filters...";
             aiBtn.disabled = true;
-            
             setTimeout(() => {
                 status.innerText = "AI Enhancement Complete!";
                 aiBtn.innerText = "✅ AI Enhanced Successfully";
-                aiBtn.classList.replace('bg-gradient-to-r', 'bg-green-600');
+                aiBtn.classList.replace('from-blue-600', 'from-green-600');
                 aiBtn.classList.add('bg-green-600');
                 audioContainer.classList.add('p-3', 'bg-blue-900/20', 'rounded-2xl', 'border', 'border-blue-500/30');
             }, 2500);
