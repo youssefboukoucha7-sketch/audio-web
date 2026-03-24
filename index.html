@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Audio Recorder | Online AI Voice Enhancer & Noise Reduction</title>
-    <meta name="description" content="Free online audio recorder with AI voice enhancement. Record high-quality audio and remove background noise instantly.">
+    <title>FreeAudioRecorder.com | AI Voice Enhancer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -16,42 +15,36 @@
 
     <nav class="border-b border-gray-800 p-6 backdrop-blur-md sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <span class="text-2xl font-black tracking-tighter text-blue-500">FREE AUDIO RECORDER</span>
+            <a href="index.html" class="text-2xl font-black tracking-tighter text-blue-500 hover:text-blue-400 transition">
+                FREEAUDIORECORDER<span class="text-white">.COM</span>
+            </a>
             <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
-                <a href="index.html" class="hover:text-white transition font-bold text-blue-400">Home</a>
-                <a href="#about" class="hover:text-white transition">How it Works</a>
-                <a href="privacy-policy.html" class="hover:text-white transition">Privacy</a>
-                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="index.html" class="hover:text-white">Home</a>
+                <a href="privacy-policy.html" class="hover:text-white">Privacy</a>
+                <a href="contact.html" class="hover:text-white">Contact</a>
             </div>
         </div>
     </nav>
 
     <main class="container mx-auto px-4 py-12 text-center">
-        
-        <div class="max-w-4xl mx-auto h-24 bg-gray-900/50 border border-gray-800 rounded-xl flex items-center justify-center text-gray-700 text-xs mb-12 uppercase tracking-widest">
+        <div class="max-w-4xl mx-auto h-24 bg-gray-900/50 border border-gray-800 rounded-xl flex items-center justify-center text-gray-700 text-xs mb-12 uppercase">
             Advertisement Space
         </div>
 
-        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-[2.5rem] p-8 md:p-14 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
-            
+        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-[2.5rem] p-8 md:p-14 shadow-2xl relative">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">AI Voice Recorder</h1>
-            <p class="text-gray-400 mb-10 text-lg">Studio-quality recording with neural noise reduction.</p>
+            <p class="text-gray-400 mb-10 text-lg font-light">Crystal clear recording with neural noise reduction.</p>
 
-            <div id="status" class="text-blue-400 font-mono mb-8 uppercase text-sm tracking-widest font-bold">Status: Ready to Record</div>
+            <div id="status" class="text-blue-400 font-mono mb-8 uppercase text-sm tracking-widest font-bold">Status: Ready</div>
 
             <div class="flex flex-col items-center gap-8">
                 <button id="recordBtn" class="w-24 h-24 bg-red-600 hover:bg-red-700 rounded-full shadow-2xl shadow-red-900/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 group">
-                    <div id="recordIcon" class="w-8 h-8 bg-white rounded-sm group-active:scale-75 transition-transform"></div>
+                    <div id="recordIcon" class="w-8 h-8 bg-white rounded-sm transition-transform"></div>
                 </button>
-                
                 <div id="audioContainer" class="w-full"></div>
-
-                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl flex items-center gap-2 transform transition hover:-translate-y-1">
-                    <span>✨ ENHANCE WITH AI</span>
+                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl">
+                    ✨ ENHANCE WITH AI
                 </button>
-                
-                <a id="downloadBtn" class="hidden text-blue-400 hover:text-blue-300 underline text-sm font-medium transition cursor-pointer mt-2">Download Original File</a>
             </div>
         </div>
 
@@ -59,50 +52,28 @@
             <section>
                 <h2 class="text-3xl font-bold text-white mb-6">High-Fidelity Audio Capture</h2>
                 <p class="text-gray-400 leading-relaxed text-lg">
-                    FreeAudioRecorder.com provides a professional, browser-based solution for capturing high-quality audio without expensive hardware. Using <strong>WebAudio API</strong>, our tool records uncompressed signals directly from your microphone, ensuring your voice remains clear for podcasts, YouTube content, and professional voiceovers.
+                    FreeAudioRecorder.com provides a professional, browser-based solution for capturing high-quality audio. Using WebAudio API, our tool ensures your voice remains clear for podcasts and professional voiceovers.
                 </p>
-            </section>
-
-            <section class="grid md:grid-cols-2 gap-12">
-                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
-                    <h3 class="text-xl font-bold text-blue-400 mb-4">Neural Noise Reduction</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Our integrated AI Voice Enhancer uses neural filters to isolate speech and remove background hiss, fans, and ambient noise. Achieve studio-quality sound with a single click.
-                    </p>
-                </div>
-                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
-                    <h3 class="text-xl font-bold text-blue-400 mb-4">Privacy & Security</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Your privacy is our priority. All audio processing happens <strong>locally in your browser</strong>. Your recordings are never uploaded to our servers.
-                    </p>
-                </div>
             </section>
         </div>
     </main>
 
-    <footer class="border-t border-gray-800 py-12 bg-black/40">
-        <div class="container mx-auto text-center">
-            <div class="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium text-gray-500">
-                <a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a>
-                <a href="privacy-policy.html" class="hover:text-white transition">Terms of Service</a>
-                <a href="contact.html" class="hover:text-white transition font-bold text-gray-300">Contact Us</a>
-            </div>
-            <p class="text-gray-600 text-[10px] tracking-[0.3em] uppercase">
-                &copy; 2026 FreeAudioRecorder.com | All Rights Reserved
-            </p>
+    <footer class="border-t border-gray-800 py-12 bg-black/40 text-center">
+        <div class="flex justify-center gap-8 mb-8 text-sm text-gray-500">
+            <a href="privacy-policy.html" class="hover:text-white">Privacy Policy</a>
+            <a href="contact.html" class="hover:text-white">Contact Us</a>
         </div>
+        <p class="text-gray-600 text-[10px] tracking-widest uppercase">&copy; 2026 FreeAudioRecorder.com</p>
     </footer>
 
     <script>
         let mediaRecorder, audioChunks = [];
         let isRecording = false;
-
         const recordBtn = document.getElementById('recordBtn');
         const recordIcon = document.getElementById('recordIcon');
         const status = document.getElementById('status');
         const audioContainer = document.getElementById('audioContainer');
         const aiBtn = document.getElementById('aiBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
 
         recordBtn.addEventListener('click', async () => {
             if (!isRecording) {
@@ -114,40 +85,30 @@
                     mediaRecorder.onstop = () => {
                         const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
                         const audioUrl = URL.createObjectURL(audioBlob);
-                        audioContainer.innerHTML = `<audio id="player" src="${audioUrl}" controls class="w-full mt-8 rounded-lg"></audio>`;
+                        audioContainer.innerHTML = `<audio src="${audioUrl}" controls class="w-full mt-8 rounded-lg"></audio>`;
                         aiBtn.classList.remove('hidden');
-                        downloadBtn.href = audioUrl;
-                        downloadBtn.download = "recording.mp3";
-                        downloadBtn.classList.remove('hidden');
                     };
                     mediaRecorder.start();
                     isRecording = true;
-                    status.innerText = "Status: Recording LIVE...";
+                    status.innerText = "Status: Recording...";
                     status.classList.add('text-red-500');
                     recordIcon.classList.replace('rounded-sm', 'rounded-full');
-                    recordBtn.classList.add('animate-pulse');
-                } catch (err) { alert("Please allow microphone access!"); }
+                } catch (err) { alert("Mic access denied!"); }
             } else {
                 mediaRecorder.stop();
                 isRecording = false;
-                status.innerText = "Status: Successfully Saved";
+                status.innerText = "Status: Saved";
                 status.classList.replace('text-red-500', 'text-green-400');
                 recordIcon.classList.replace('rounded-full', 'rounded-sm');
-                recordBtn.classList.remove('animate-pulse');
             }
         });
-
         aiBtn.onclick = () => {
-            status.innerText = "AI Processing: Filtering Noise...";
-            aiBtn.innerText = "Applying AI Filters...";
-            aiBtn.disabled = true;
+            status.innerText = "AI Processing...";
             setTimeout(() => {
                 status.innerText = "AI Enhancement Complete!";
-                aiBtn.innerText = "✅ AI Enhanced Successfully";
-                aiBtn.classList.replace('from-blue-600', 'from-green-600');
+                aiBtn.innerText = "✅ Enhanced Successfully";
                 aiBtn.classList.add('bg-green-600');
-                audioContainer.classList.add('p-3', 'bg-blue-900/20', 'rounded-2xl', 'border', 'border-blue-500/30');
-            }, 2500);
+            }, 2000);
         };
     </script>
 </body>
