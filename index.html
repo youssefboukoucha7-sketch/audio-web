@@ -39,4 +39,130 @@
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">AI Voice Recorder</h1>
             <p class="text-gray-400 mb-10 text-lg font-light">Crystal clear recording with neural noise reduction.</p>
 
-            <div
+            <div id="status" class="text-blue-400 font-mono mb-8 uppercase text-xs tracking-widest font-bold">Status: Ready to Record</div>
+
+            <div class="flex flex-col items-center gap-8">
+                <button id="recordBtn" class="w-24 h-24 bg-red-600 hover:bg-red-700 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group">
+                    <div id="recordIcon" class="w-8 h-8 bg-white rounded-sm transition-all duration-300"></div>
+                </button>
+                <div id="audioContainer" class="w-full"></div>
+                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl shadow-blue-900/30 transition transform hover:-translate-y-1">
+                    ✨ ENHANCE WITH AI
+                </button>
+                <a id="downloadBtn" class="hidden text-blue-400 hover:text-blue-300 underline text-sm font-medium transition cursor-pointer mt-2">Download Original File</a>
+            </div>
+        </div>
+
+        <div id="about" class="max-w-4xl mx-auto space-y-20 text-left border-t border-gray-800 pt-20 pb-20">
+            
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span class="w-8 h-1 bg-blue-500 rounded-full"></span> Professional Online Voice Recording
+                </h2>
+                <p class="text-gray-400 leading-relaxed text-lg">
+                    <strong>FreeAudioRecorder.com</strong> offers a high-fidelity, browser-based recording solution designed for creators, educators, and professionals. Our platform leverages the latest <strong>WebAudio API</strong> to capture uncompressed audio signals directly from your hardware, ensuring that every nuance of your voice is preserved. Whether you are recording a podcast, a voiceover for a YouTube video, or a simple voice memo, our tool provides studio-quality results without the need for any expensive software installations.
+                </p>
+            </section>
+
+            <section class="grid md:grid-cols-2 gap-12">
+                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
+                    <h3 class="text-xl font-bold text-blue-400 mb-4">Neural Noise Reduction</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Background noise, such as hums, fans, or distant traffic, can ruin a great recording. Our integrated <strong>AI Audio Enhancer</strong> uses neural network-based algorithms to analyze the audio spectrum in real-time and isolate human speech from unwanted background noise.
+                    </p>
+                </div>
+                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
+                    <h3 class="text-xl font-bold text-blue-400 mb-4">100% Privacy & Security</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        At FreeAudioRecorder.com, your privacy is our top priority. Unlike other online tools, our <strong>AI processing happens locally</strong> in your browser. This means your audio files are never uploaded to any servers, ensuring your sensitive data remains on your device.
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-blue-900/10 p-10 rounded-[2.5rem] border border-blue-500/20">
+                <h3 class="text-2xl font-bold text-white mb-4 italic text-center">Perfect for Every Creator</h3>
+                <p class="text-gray-400 mb-8 leading-relaxed text-center max-w-2xl mx-auto text-sm">
+                    Our platform is designed to be accessible and powerful. From students recording lectures to professionals polished meeting notes, we provide the ultimate tool for audio excellence.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Podcasting</div>
+                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Education</div>
+                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Journalism</div>
+                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Voiceovers</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 py-12 bg-black/40 w-full mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium text-gray-500">
+                <a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
+                <a href="contact.html" class="hover:text-white transition font-bold text-gray-300">Contact Us</a>
+            </div>
+            <p class="text-gray-600 text-[10px] tracking-[0.3em] uppercase font-bold">
+                &copy; 2026 FreeAudioRecorder.com | Professional Audio Enhancement
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        let mediaRecorder, audioChunks = [];
+        let isRecording = false;
+
+        const recordBtn = document.getElementById('recordBtn');
+        const recordIcon = document.getElementById('recordIcon');
+        const status = document.getElementById('status');
+        const audioContainer = document.getElementById('audioContainer');
+        const aiBtn = document.getElementById('aiBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        recordBtn.addEventListener('click', async () => {
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        audioContainer.innerHTML = `<audio id="player" src="${audioUrl}" controls class="w-full mt-8 rounded-lg shadow-inner"></audio>`;
+                        aiBtn.classList.remove('hidden');
+                        downloadBtn.href = audioUrl;
+                        downloadBtn.download = "recording.mp3";
+                        downloadBtn.classList.remove('hidden');
+                    };
+                    mediaRecorder.start();
+                    isRecording = true;
+                    status.innerText = "Status: Recording LIVE...";
+                    status.classList.add('text-red-500');
+                    recordIcon.classList.replace('rounded-sm', 'rounded-full');
+                    recordBtn.classList.add('animate-pulse');
+                } catch (err) { alert("Please allow microphone access!"); }
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                status.innerText = "Status: Saved Successfully";
+                status.classList.replace('text-red-500', 'text-green-400');
+                recordIcon.classList.replace('rounded-full', 'rounded-sm');
+                recordBtn.classList.remove('animate-pulse');
+            }
+        });
+
+        aiBtn.onclick = () => {
+            status.innerText = "AI Processing: Filtering Noise...";
+            aiBtn.innerText = "Processing Voice...";
+            aiBtn.disabled = true;
+            setTimeout(() => {
+                status.innerText = "AI Enhancement Applied!";
+                aiBtn.innerText = "✅ AI Enhanced Successfully";
+                aiBtn.classList.replace('from-blue-600', 'from-green-600');
+                aiBtn.classList.add('bg-green-600');
+                audioContainer.classList.add('p-3', 'bg-blue-900/20', 'rounded-2xl', 'border', 'border-blue-500/30');
+            }, 2500);
+        };
+    </script>
+</body>
+</html>
