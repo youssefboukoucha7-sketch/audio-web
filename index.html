@@ -3,166 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeAudioRecorder.com | AI Voice Enhancer & Noise Reduction</title>
-    <meta name="description" content="Professional online audio recorder with AI noise reduction. Record, enhance, and download high-quality audio for free.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Free Online Audio Recorder - High Quality & Secure | FreeAudioRecorder.com</title>
+    <meta name="description" content="Record high-quality audio directly from your browser for free. No installation needed. Secure, private, and easy to use. Perfect for notes, interviews, and more.">
+    <link rel="canonical" href="https://freeaudiorecorder.com/" />
+    
+    <meta property="og:title" content="Free Online Audio Recorder - High Quality & Secure" />
+    <meta property="og:description" content="Record high-quality audio directly from your browser for free. Secure, private, and easy to use." />
+    <meta property="og:url" content="https://freeaudiorecorder.com/" />
+    <meta property="og:type" content="website" />
     <style>
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .bg-gradient { background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%); }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Recorder Styles */
+        #recorder-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #status {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .status-idle { color: #7f8c8d; }
+        .status-recording { color: #e74c3c; animation: pulse 1.5s infinite; }
+        .status-paused { color: #f39c12; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            font-weight: 500;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #startBtn {
+            background-color: #e74c3c; /* Red for record */
+            color: #fff;
+        }
+        #startBtn:hover { background-color: #c0392b; }
+
+        #pauseBtn {
+            background-color: #f39c12; /* Orange for pause */
+            color: #fff;
+        }
+        #pauseBtn:hover { background-color: #d35400; }
+
+        #stopBtn {
+            background-color: #34495e; /* Dark for stop */
+            color: #fff;
+        }
+        #stopBtn:hover { background-color: #2c3e50; }
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            color: #eee;
+        }
+
+        #audio-playback {
+            margin-top: 30px;
+            width: 100%;
+            display: none; /* Hidden until recording is stopped */
+        }
+
+        #downloadLink {
+            display: none; /* Hidden until recording is stopped */
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        #downloadLink:hover { background-color: #2980b9; }
+
+        /* Description and FAQ Styles */
+        .description-text {
+            margin-top: 40px;
+            font-size: 17px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            position: relative;
+            padding-right: 25px;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #3498db;
+        }
+
+        .faq-answer {
+            display: none;
+            padding-top: 10px;
+            color: #555;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+
+        /* Essential Pages Styles (hidden by default) */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        footer {
+            background-color: #34495e;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        /* Contact Page Styles */
+        #contact input, #contact textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
+        }
+        
+        #contact button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        #contact button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
-<body class="bg-[#0f172a] bg-gradient text-white min-h-screen flex flex-col">
+<body>
 
-    <nav class="border-b border-gray-800 p-6 backdrop-blur-md sticky top-0 z-50 bg-[#0f172a]/80">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-xl md:text-2xl font-black tracking-tighter text-blue-500 hover:text-blue-400 transition">
-                FREEAUDIORECORDER<span class="text-white">.COM</span>
-            </a>
-            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
-                <a href="index.html" class="hover:text-white transition font-bold text-blue-400">Home</a>
-                <a href="#about" class="hover:text-white transition">How it Works</a>
-                <a href="privacy-policy.html" class="hover:text-white transition">Privacy</a>
-                <a href="contact.html" class="hover:text-white transition font-bold">Contact</a>
-            </div>
-        </div>
+<header>
+    <nav>
+        <a href="#" class="logo" onclick="showPage('home')">FreeAudioRecorder</a>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#faq" onclick="showPage('home'); setTimeout(() => document.getElementById('faq').scrollIntoView({behavior: 'smooth'}), 10)">FAQ</a></li>
+            <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+        </ul>
     </nav>
+</header>
 
-    <main class="flex-grow container mx-auto px-4 py-12 text-center">
-        
-        <div class="max-w-4xl mx-auto h-24 bg-gray-900/50 border border-gray-800 rounded-xl flex items-center justify-center text-gray-700 text-[10px] mb-12 uppercase tracking-[0.4em]">
-            Advertisement Space
-        </div>
+<main>
+    <div id="home" class="page-content active">
+        <section>
+            <h1>Free Online Audio Recorder</h1>
+            <p class="subtitle">High-quality recording, directly in your browser.</p>
 
-        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-[2.5rem] p-8 md:p-14 shadow-2xl relative overflow-hidden mb-20">
-            <div class="absolute top-0 left-0 w-full h-1 bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">AI Voice Recorder</h1>
-            <p class="text-gray-400 mb-10 text-lg font-light">Crystal clear recording with neural noise reduction.</p>
-
-            <div id="status" class="text-blue-400 font-mono mb-8 uppercase text-xs tracking-widest font-bold">Status: Ready to Record</div>
-
-            <div class="flex flex-col items-center gap-8">
-                <button id="recordBtn" class="w-24 h-24 bg-red-600 hover:bg-red-700 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group">
-                    <div id="recordIcon" class="w-8 h-8 bg-white rounded-sm transition-all duration-300"></div>
-                </button>
-                <div id="audioContainer" class="w-full"></div>
-                <button id="aiBtn" class="hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-12 py-4 rounded-full font-bold shadow-xl shadow-blue-900/30 transition transform hover:-translate-y-1">
-                    ✨ ENHANCE WITH AI
-                </button>
-                <a id="downloadBtn" class="hidden text-blue-400 hover:text-blue-300 underline text-sm font-medium transition cursor-pointer mt-2">Download Original File</a>
+            <div id="recorder-container">
+                <p id="status" class="status-idle">Status: Idle</p>
+                <button id="startBtn">Record</button>
+                <button id="pauseBtn" disabled>Pause</button>
+                <button id="stopBtn" disabled>Stop</button>
+                <br>
+                <audio id="audio-playback" controls></audio>
+                <br>
+                <a id="downloadLink">Download Recording</a>
             </div>
-        </div>
 
-        <div id="about" class="max-w-4xl mx-auto space-y-20 text-left border-t border-gray-800 pt-20 pb-20">
+            <div class="description-text">
+                <h2>Easy & Secure Online Voice Recorder</h2>
+                <p>Welcome to FreeAudioRecorder.com, your go-to solution for recording audio quickly and without any hassle. Our tool works directly within your web browser, meaning you don't need to download or install any external software. Whether you need to record a quick voice memo, an interview, a podcast segment, or practice a speech, our online recorder provides a seamless experience.</p>
+                <p>We prioritize your privacy. All recordings are processed locally within your browser and are never uploaded to our servers. This ensures that your audio remains private and secure.</p>
+            </div>
+        </section>
+
+        <section id="faq">
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <div class="faq-item">
+                <p class="faq-question">Is this audio recorder free to use?</p>
+                <div class="faq-answer">
+                    <p>Yes, perfectly free! You can record and download your audio files without any cost or hidden fees.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Do I need to install any software?</p>
+                <div class="faq-answer">
+                    <p>No, you do not. Our audio recorder is entirely browser-based, making it compatible with Windows, macOS, Linux, Chrome OS, and mobile devices with modern browsers.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Are my recordings private and secure?</p>
+                <div class="faq-answer">
+                    <p>Absolutely. We take your privacy seriously. The recording process happens entirely within your web browser using JavaScript. Your audio data is never transmitted to our servers, ensuring total confidentiality.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">What audio format is used for recordings?</p>
+                <div class="faq-answer">
+                    <p>Most modern browsers record in the WebM or Ogg format, which provides excellent quality at a reasonable file size. These formats are widely supported for playback.</p>
+                </div>
+            </div>
+             <div class="faq-item">
+                <p class="faq-question">Is there a limit on recording length?</p>
+                <div class="faq-answer">
+                    <p>There is no artificial limit imposed by our website. However, the maximum recording length might be limited by your device's available memory (RAM) and browser storage.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="about" class="page-content">
+        <section>
+            <h2>About Us</h2>
+            <p>Welcome to FreeAudioRecorder.com. We are dedicated to providing simple, powerful, and accessible online tools. Our mission is to make audio recording effortless for everyone, from students and researchers to podcasters and hobbyists.</p>
+            <p>We believe that technology should be user-friendly and privacy-focused. That's why we developed this browser-based audio recorder that requires no installations and keeps your data secure by processing everything locally. Our team is committed to continuous improvement, ensuring that you have the best possible recording experience.</p>
+            <p>Thank you for choosing FreeAudioRecorder.com. If you have any suggestions or feedback, please feel free to contact us.</p>
+        </section>
+    </div>
+
+    <div id="privacy" class="page-content">
+        <section>
+            <h2>Privacy Policy</h2>
+            <p>Effective date: [Date]</p>
+            <p>At FreeAudioRecorder.com, we are committed to protecting your privacy. This Privacy Policy outlines how we handle information when you use our website and online audio recorder.</p>
             
-            <section>
-                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-                    <span class="w-8 h-1 bg-blue-500 rounded-full"></span> Professional Online Voice Recording
-                </h2>
-                <p class="text-gray-400 leading-relaxed text-lg">
-                    <strong>FreeAudioRecorder.com</strong> offers a high-fidelity, browser-based recording solution designed for creators, educators, and professionals. Our platform leverages the latest <strong>WebAudio API</strong> to capture uncompressed audio signals directly from your hardware, ensuring that every nuance of your voice is preserved. Whether you are recording a podcast, a voiceover for a YouTube video, or a simple voice memo, our tool provides studio-quality results without the need for any expensive software installations.
-                </p>
-            </section>
+            <h3>1. Information We Do Not Collect</h3>
+            <p><strong>Audio Recordings:</strong> Our audio recorder operates entirely within your web browser. We do not transmit, store, or have access to any audio you record using our tool. All recording data remains on your local device.</p>
+            <p><strong>Personal Information:</strong> We do not require you to create an account or provide any personal information (such as your name or email address) to use the audio recorder.</p>
+            
+            <h3>2. Information We May Collect</h3>
+            <p><strong>Usage Data:</strong> Like most websites, we may automatically collect certain non-personal information when you visit our site. This may include your IP address, browser type, operating system, referring URLs, and information about your usage patterns on our site. We use this data to analyze trends, administer the site, and improve our services.</p>
+            <p><strong>Cookies:</strong> We may use cookies to enhance your experience on our website. Cookies are small text files stored on your device. You can choose to disable cookies through your browser settings, but this may affect some functionality of the site. We may use third-party analytics services, such as Google Analytics, which also use cookies to collect anonymous usage information.</p>
+            <p><strong>Google AdSense:</strong> We may use Google AdSense to display advertisements on our site. Google, as a third-party vendor, uses cookies to serve ads based on a user's prior visits to your website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.</p>
+            
+            <h3>3. Data Security</h3>
+            <p>While we do not store your audio recordings, we implement reasonable security measures to protect the non-personal information we may collect. However, please be aware that no method of transmission over the Internet or method of electronic storage is 100% secure.</p>
+            
+            <h3>4. Third-Party Links</h3>
+            <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these websites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+            
+            <h3>5. Changes to This Privacy Policy</h3>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
+            
+            <h3>6. Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy, please contact us at [Your Contact Email].</p>
+        </section>
+    </div>
 
-            <section class="grid md:grid-cols-2 gap-12">
-                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
-                    <h3 class="text-xl font-bold text-blue-400 mb-4">Neural Noise Reduction</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Background noise, such as hums, fans, or distant traffic, can ruin a great recording. Our integrated <strong>AI Audio Enhancer</strong> uses neural network-based algorithms to analyze the audio spectrum in real-time and isolate human speech from unwanted background noise.
-                    </p>
-                </div>
-                <div class="bg-gray-900/30 p-8 rounded-3xl border border-gray-800">
-                    <h3 class="text-xl font-bold text-blue-400 mb-4">100% Privacy & Security</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        At FreeAudioRecorder.com, your privacy is our top priority. Unlike other online tools, our <strong>AI processing happens locally</strong> in your browser. This means your audio files are never uploaded to any servers, ensuring your sensitive data remains on your device.
-                    </p>
-                </div>
-            </section>
+    <div id="terms" class="page-content">
+        <section>
+            <h2>Terms of Service</h2>
+            <p>Effective date: [Date]</p>
+            <p>Please read these Terms of Service ("Terms") carefully before using FreeAudioRecorder.com (the "Website") operated by [Your Team/Company Name] ("us", "we", or "our").</p>
+            
+            <h3>1. Acceptance of Terms</h3>
+            <p>By accessing or using the Website, you agree to be bound by these Terms. If you disagree with any part of the Terms, you may not access the Website.</p>
+            
+            <h3>2. Use of the Audio Recorder</h3>
+            <p>Our online audio recorder is provided for your personal and non-commercial use. You are solely responsible for the content of your recordings. You agree not to use the recorder for any illegal or unauthorized purpose, including but not limited to recording without consent where required by law.</p>
+            
+            <h3>3. Intellectual Property</h3>
+            <p>The Website and its original content, features, and functionality are and will remain the exclusive property of [Your Team/Company Name] and its licensors. The Website is protected by copyright, trademark, and other laws.</p>
+            
+            <h3>4. Disclaimer of Warranty</h3>
+            <p>The Website is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties, expressed or implied, regarding the Website's accuracy, reliability, or availability. To the fullest extent permitted by law, we disclaim all warranties, including but not limited to implied warranties of merchantability and fitness for a particular purpose.</p>
+            
+            <h3>5. Limitation of Liability</h3>
+            <p>In no event shall [Your Team/Company Name] be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data or profits, arising out of or in connection with your use of the Website.</p>
+            
+            <h3>6. Governing Law</h3>
+            <p>These Terms shall be governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.</p>
+            
+            <h3>7. Changes to Terms</h3>
+            <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. Any changes will be posted on this page.</p>
+            
+            <h3>8. Contact Us</h3>
+            <p>If you have any questions about these Terms, please contact us at [Your Contact Email].</p>
+        </section>
+    </div>
 
-            <section class="bg-blue-900/10 p-10 rounded-[2.5rem] border border-blue-500/20">
-                <h3 class="text-2xl font-bold text-white mb-4 italic text-center">Perfect for Every Creator</h3>
-                <p class="text-gray-400 mb-8 leading-relaxed text-center max-w-2xl mx-auto text-sm">
-                    Our platform is designed to be accessible and powerful. From students recording lectures to professionals polished meeting notes, we provide the ultimate tool for audio excellence.
-                </p>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Podcasting</div>
-                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Education</div>
-                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Journalism</div>
-                    <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700 text-[10px] font-bold uppercase tracking-widest text-blue-400">Voiceovers</div>
-                </div>
-            </section>
-        </div>
-    </main>
+    <div id="contact" class="page-content">
+        <section>
+            <h2>Contact Us</h2>
+            <p>We would love to hear from you! If you have any questions, feedback, or suggestions regarding FreeAudioRecorder.com, please don't hesitate to get in touch with us.</p>
+            <p>You can reach us via email at:</p>
+            <p><strong>[Your Contact Email]</strong></p>
+            <p>Alternatively, you can use the contact form below:</p>
+            
+            <form action="https://formspree.io/f/[YourFormspreeID]" method="POST"> <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </div>
+</main>
 
-    <footer class="border-t border-gray-800 py-12 bg-black/40 w-full mt-auto">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex flex-wrap justify-center gap-8 mb-8 text-sm font-medium text-gray-500">
-                <a href="privacy-policy.html" class="hover:text-white transition">Privacy Policy</a>
-                <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
-                <a href="contact.html" class="hover:text-white transition font-bold text-gray-300">Contact Us</a>
-            </div>
-            <p class="text-gray-600 text-[10px] tracking-[0.3em] uppercase font-bold">
-                &copy; 2026 FreeAudioRecorder.com | Professional Audio Enhancement
-            </p>
-        </div>
-    </footer>
+<footer>
+    <div class="container">
+        <ul class="footer-links">
+            <li><a href="#" onclick="showPage('about')">About Us</a></li>
+            <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
+            <li><a href="#" onclick="showPage('terms')">Terms of Service</a></li>
+            <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+        <p>&copy; 2023 FreeAudioRecorder.com. All rights reserved.</p>
+    </div>
+</footer>
 
-    <script>
-        let mediaRecorder, audioChunks = [];
-        let isRecording = false;
-
-        const recordBtn = document.getElementById('recordBtn');
-        const recordIcon = document.getElementById('recordIcon');
-        const status = document.getElementById('status');
-        const audioContainer = document.getElementById('audioContainer');
-        const aiBtn = document.getElementById('aiBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        recordBtn.addEventListener('click', async () => {
-            if (!isRecording) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    audioChunks = [];
-                    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
-                    mediaRecorder.onstop = () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        audioContainer.innerHTML = `<audio id="player" src="${audioUrl}" controls class="w-full mt-8 rounded-lg shadow-inner"></audio>`;
-                        aiBtn.classList.remove('hidden');
-                        downloadBtn.href = audioUrl;
-                        downloadBtn.download = "recording.mp3";
-                        downloadBtn.classList.remove('hidden');
-                    };
-                    mediaRecorder.start();
-                    isRecording = true;
-                    status.innerText = "Status: Recording LIVE...";
-                    status.classList.add('text-red-500');
-                    recordIcon.classList.replace('rounded-sm', 'rounded-full');
-                    recordBtn.classList.add('animate-pulse');
-                } catch (err) { alert("Please allow microphone access!"); }
-            } else {
-                mediaRecorder.stop();
-                isRecording = false;
-                status.innerText = "Status: Saved Successfully";
-                status.classList.replace('text-red-500', 'text-green-400');
-                recordIcon.classList.replace('rounded-full', 'rounded-sm');
-                recordBtn.classList.remove('animate-pulse');
-            }
+<script>
+    // Essential Pages Navigation Logic
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(page => {
+            page.classList.remove('active');
         });
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0, 0); // Scroll to top on page change
+    }
 
-        aiBtn.onclick = () => {
-            status.innerText = "AI Processing: Filtering Noise...";
-            aiBtn.innerText = "Processing Voice...";
-            aiBtn.disabled = true;
-            setTimeout(() => {
-                status.innerText = "AI Enhancement Applied!";
-                aiBtn.innerText = "✅ AI Enhanced Successfully";
-                aiBtn.classList.replace('from-blue-600', 'from-green-600');
-                aiBtn.classList.add('bg-green-600');
-                audioContainer.classList.add('p-3', 'bg-blue-900/20', 'rounded-2xl', 'border', 'border-blue-500/30');
-            }, 2500);
-        };
-    </script>
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentNode;
+            item.classList.toggle('active');
+        });
+    });
+
+    // --- Audio Recorder Logic ---
+    let mediaRecorder;
+    let audioChunks = [];
+    let audioBlob;
+    let audioUrl;
+
+    const statusP = document.getElementById('status');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const audioPlayback = document.getElementById('audio-playback');
+    const downloadLink = document.getElementById('downloadLink');
+
+    startBtn.addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = []; // Clear previous recording data
+
+            mediaRecorder.addEventListener('dataavailable', event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener('stop', () => {
+                audioBlob = new Blob(audioChunks, { type: 'audio/webm' }); // common browser format
+                audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayback.src = audioUrl;
+                audioPlayback.style.display = 'block'; // Show playback controls
+                
+                downloadLink.href = audioUrl;
+                downloadLink.download = 'recording.webm'; // Suggest a filename
+                downloadLink.style.display = 'inline-block'; // Show download link
+                
+                statusP.textContent = 'Status: Idle';
+                statusP.className = 'status-idle';
+            });
+
+            mediaRecorder.start();
+            statusP.textContent = 'Status: Recording...';
+            statusP.className = 'status-recording';
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            stopBtn.disabled = false;
+            audioPlayback.style.display = 'none'; // Hide playback during new recording
+            downloadLink.style.display = 'none'; // Hide download link
+
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+            statusP.textContent = 'Status: Error accessing microphone. Please check permissions.';
+            statusP.style.color = 'red';
+        }
+    });
+
+    pauseBtn.addEventListener('click', () => {
+        if (mediaRecorder.state === 'recording') {
+            mediaRecorder.pause();
+            statusP.textContent = 'Status: Paused';
+            statusP.className = 'status-paused';
+            pauseBtn.textContent = 'Resume';
+        } else if (mediaRecorder.state === 'paused') {
+            mediaRecorder.resume();
+            statusP.textContent = 'Status: Recording...';
+            statusP.className = 'status-recording';
+            pauseBtn.textContent = 'Pause';
+        }
+    });
+
+    stopBtn.addEventListener('click', () => {
+        mediaRecorder.stop();
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        stopBtn.disabled = true;
+        pauseBtn.textContent = 'Pause'; // Reset pause button text
+    });
+</script>
+
 </body>
 </html>
