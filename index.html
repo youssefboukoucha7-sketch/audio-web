@@ -111,4 +111,133 @@
                 </div>
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">3. Does it work on mobile phones?</div>
-                    <div class="
+                    <div class="faq-answer">Yes, it is fully responsive and works on modern Android and iOS browsers that support microphone and Web Audio access.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">4. What is the maximum recording length?</div>
+                    <div class="faq-answer">There are no hard limits set by the platform. It depends solely on your device's available memory (RAM) to hold the audio buffer.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">5. Can I use these recordings commercially?</div>
+                    <div class="faq-answer">Yes, the tool provided by Youssef is free for both personal and commercial projects like YouTube videos and podcasts.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="about" class="page-content">
+        <section class="glass-card">
+            <h2>About FreeAudioRecorder.com</h2>
+            <p>Established in March 2026 by <strong>Youssef</strong>, this USA-based platform is dedicated to providing high-quality, privacy-first audio tools. We believe that powerful AI technology should be accessible to everyone through a browser.</p>
+        </section>
+    </div>
+
+    <div id="contact" class="page-content">
+        <section class="glass-card">
+            <h2>Contact Youssef</h2>
+            <p>Email: <strong>youssefboukoucha7@gmail.com</strong></p>
+            <form action="https://formspree.io/f/mdapndnk" method="POST" class="contact-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="How can Youssef help you?" rows="5" required></textarea>
+                <button type="submit" class="btn-primary" style="width:100%;">Send Message</button>
+            </form>
+        </section>
+    </div>
+
+    <div id="privacy" class="page-content">
+        <section class="glass-card">
+            <h2>Privacy Policy</h2>
+            <ol>
+                <li><strong>Local Processing:</strong> All audio processing occurs strictly in your browser.</li>
+                <li><strong>No Storage:</strong> Your voice recordings are never stored on our servers.</li>
+                <li><strong>Mic Security:</strong> Access is closed immediately after recording.</li>
+                <li><strong>USA Laws:</strong> We comply with all relevant data protection standards.</li>
+                <li><strong>Cookies:</strong> We use minimal cookies to maintain our free service via AdSense.</li>
+            </ol>
+        </section>
+    </div>
+
+    <div id="terms" class="page-content">
+        <section class="glass-card">
+            <h2>Terms of Service</h2>
+            <p>Effective Date: 25/03/2026. This service is owned and operated by <strong>Youssef</strong>.</p>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('privacy')">Privacy Policy</a>
+        <a onclick="showPage('terms')">Terms</a>
+        <a onclick="showPage('contact')">Contact</a>
+    </div>
+    <p style="font-size:12px; color:#94a3b8; margin-top:20px">© 2026 <strong>FreeAudioRecorder.com</strong>. Developed by <strong>Youssef</strong>. USA.</p>
+</footer>
+
+<script>
+    let recorder, chunks = [], player, pitchShift;
+    let selectedShift = 0;
+
+    async function initAudio() {
+        await Tone.start();
+        if (!pitchShift) {
+            pitchShift = new Tone.PitchShift(selectedShift).toDestination();
+            player = new Tone.Player().connect(pitchShift);
+        }
+    }
+
+    function showPage(id) {
+        document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function toggleFaq(el) {
+        el.parentElement.classList.toggle('open');
+    }
+
+    function setEffect(shift, el) {
+        document.querySelectorAll('.effect-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        selectedShift = shift;
+        if (pitchShift) pitchShift.pitch = selectedShift;
+    }
+
+    async function startRecording() {
+        await initAudio();
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recorder = new MediaRecorder(stream);
+        chunks = [];
+        recorder.ondataavailable = e => chunks.push(e.data);
+        recorder.onstop = async () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(blob);
+            await player.load(url);
+            document.getElementById('playerContainer').style.display = 'block';
+            document.getElementById('downloadBtn').href = url;
+            document.getElementById('downloadBtn').download = "my_voice.webm";
+            document.getElementById('downloadBtn').style.display = "inline-block";
+            document.getElementById('statusLabel').innerText = "● Ready";
+        };
+        recorder.start();
+        document.getElementById('startBtn').style.display = 'none';
+        document.getElementById('stopBtn').style.display = 'inline-block';
+        document.getElementById('statusLabel').innerText = "● Recording...";
+    }
+
+    function stopRecording() {
+        recorder.stop();
+        document.getElementById('startBtn').style.display = 'inline-block';
+        document.getElementById('stopBtn').style.display = 'none';
+    }
+
+    async function playWithEffect() {
+        await initAudio();
+        if (player.state === "started") player.stop();
+        player.start();
+    }
+</script>
+</body>
+</html>
