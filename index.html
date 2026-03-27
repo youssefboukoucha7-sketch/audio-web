@@ -227,23 +227,40 @@
 
         async function playPreview() { await initAudio(); if(player.state === "started") player.stop(); player.start(); }
 
-        async function exportAudio() {
-            if (!originalBuffer) return;
-            const status = document.getElementById('status');
-            status.innerText = "Processing Export...";
-            const offlineCtx = new Tone.OfflineContext(2, originalBuffer.duration, 44100);
-            const offlinePitch = new Tone.PitchShift(selectedShift).toDestination();
-            const offlinePlayer = new Tone.Player(originalBuffer).connect(offlinePitch);
-            offlinePlayer.start(0);
-            const renderedBuffer = await offlineCtx.render();
-            const wav = bufferToWav(renderedBuffer);
-            const blob = new Blob([wav], { type: 'audio/wav' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = "AI_Voice_Result.wav";
-            link.click();
-            status.innerText = "Status: Download Complete";
-        }
+       async function exportAudio() {
+    if (!originalBuffer) return;
+    const status = document.getElementById('status');
+    status.innerText = "Generating File...";
+
+    // 1. Initialize offline context
+    const offlineCtx = new Tone.OfflineContext(2, originalBuffer.duration, 44100);
+    const offlinePitch = new Tone.PitchShift(selectedShift).toDestination();
+    const offlinePlayer = new Tone.Player(originalBuffer).connect(offlinePitch);
+    offlinePlayer.start(0);
+
+    // 2. Perform rendering
+    const renderedBuffer = await offlineCtx.render();
+    
+    // 3. Convert buffer to WAV
+    const wavData = bufferToWav(renderedBuffer);
+    const blob = new Blob([wavData], { type: 'audio/wav' });
+    const url = URL.createObjectURL(blob);
+    
+    // 4. Trigger download
+    const link = document.createElement('a');
+    link.style.display = 'none'; 
+    link.href = url;
+    link.download = `Voice_Record_${Date.now()}.wav`;
+    document.body.appendChild(link); 
+    link.click();
+    
+    // 5. Cleanup memory
+    setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        status.innerText = "Download Started!";
+    }, 100);
+}
 
         function bufferToWav(abuffer) {
             let n = abuffer.numberOfChannels, len = abuffer.length * n * 2 + 44, buffer = new ArrayBuffer(len), view = new DataView(buffer), pos = 0;
