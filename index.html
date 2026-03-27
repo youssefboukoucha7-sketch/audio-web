@@ -235,15 +235,19 @@
             const offlinePitch = new Tone.PitchShift(selectedShift).toDestination();
             const offlinePlayer = new Tone.Player(originalBuffer).connect(offlinePitch);
             offlinePlayer.start(0);
-            const renderedBuffer = await offlineCtx.render();
-            const wav = bufferToWav(renderedBuffer);
-            const blob = new Blob([wav], { type: 'audio/wav' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = "AI_Voice_Result.wav";
-            link.click();
-            status.innerText = "Status: Download Complete";
-        }
+        199:    const renderedBuffer = await offlineCtx.render();
+200:    const wavData = bufferToWav(renderedBuffer);
+201:    const blob = new Blob([wavData], { type: 'audio/wav' });
+202:    const url = URL.createObjectURL(blob);
+203:    
+204:    const link = document.createElement('a'); // السطر المطلوب
+205:    link.href = url;
+206:    link.download = `AI_Voice_Result.wav`;
+207:    document.body.appendChild(link); // السطر الحاسم الذي يحل المشكلة
+208:    link.click();
+209:    document.body.removeChild(link); 
+210:    
+211:    status.innerText = "Download Started!";
 
         function bufferToWav(abuffer) {
             let n = abuffer.numberOfChannels, len = abuffer.length * n * 2 + 44, buffer = new ArrayBuffer(len), view = new DataView(buffer), pos = 0;
