@@ -16,21 +16,32 @@
         .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; cursor: pointer; font-size: 14px; }
         main { max-width: 850px; margin: 40px auto; padding: 0 20px; min-height: 75vh; }
         .glass-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 25px; }
-        .page-content { display: none; }
+        .page-content { display: none; animation: fadeIn 0.4s ease; }
         .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
         .recorder-zone { text-align: center; background: #f1f5f9; padding: 30px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0; }
-        .btn-primary { background: var(--primary-color); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
-        .btn-play { background: var(--accent); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; font-weight: 700; }
+        .btn-primary { background: var(--primary-color); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-stop { background: #1e293b; color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; }
+        .btn-play { background: var(--accent); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; margin-top: 10px; }
         .btn-download { background: #10b981; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; display: none; margin: 20px auto; width: fit-content; font-weight: 700; cursor: pointer; }
+        
         .effects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 15px; }
         .effect-card { padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: white; font-weight: 600; font-size: 12px; }
         .effect-card.active { border-color: var(--primary-color); background: #eff6ff; color: var(--primary-color); }
+
         .faq-item { margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
         .faq-question { background: #fff; padding: 15px; cursor: pointer; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #f8fafc; font-size: 14px; }
+        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #f8fafc; font-size: 14px; color: #64748b; }
         .faq-item.open .faq-answer { max-height: 250px; padding: 15px; }
+        .faq-question::after { content: "+"; color: var(--primary-color); font-size: 18px; }
+        .faq-item.open .faq-question::after { content: "−"; }
+
+        .contact-form input, .contact-form textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        
         footer { background: #f1f5f9; padding: 40px 20px; text-align: center; border-top: 1px solid #e2e8f0; margin-top: 60px; }
-        .footer-links a { color: #64748b; text-decoration: none; margin: 0 12px; font-size: 13px; cursor: pointer; }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: #64748b; text-decoration: none; margin: 0 12px; font-size: 13px; font-weight: 500; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -50,15 +61,15 @@
     <div id="home" class="page-content active">
         <section class="glass-card">
             <h1 style="text-align:center">AI Voice Transformation Lab</h1>
-            <p style="text-align:center; color:#64748b;">Developed by Youssef - Pro Audio Export</p>
+            <p style="text-align:center; color:#64748b;">Developed by Youssef - High Fidelity Real-Time Processing</p>
             
             <div class="recorder-zone">
                 <p id="statusLabel" style="font-weight:700; color:var(--primary-color);">● System Ready</p>
                 <button id="startBtn" class="btn-primary" onclick="startRecording()">🔴 Start Recording</button>
-                <button id="stopBtn" class="btn-primary" style="background:#1e293b; display:none;" onclick="stopRecording()">⬛ Stop & Process</button>
+                <button id="stopBtn" class="btn-stop" style="display:none;" onclick="stopRecording()">⬛ Stop & Process</button>
                 
                 <div style="margin-top:25px; text-align:left;">
-                    <span style="font-size:12px; font-weight:700; color:#64748b;">SELECT EFFECT BEFORE DOWNLOAD:</span>
+                    <span style="font-size:12px; font-weight:700; color:#64748b;">SELECT AI VOICE FILTER:</span>
                     <div class="effects-grid">
                         <div class="effect-card active" onclick="setEffect(0, this)">Normal</div>
                         <div class="effect-card" onclick="setEffect(10, this)">Chipmunk</div>
@@ -74,9 +85,9 @@
                 </div>
 
                 <div id="playerContainer" style="margin-top:25px; display:none;">
-                    <button class="btn-play" onclick="playWithEffect()">▶ Preview Effect</button>
+                    <button class="btn-play" onclick="playWithEffect()">▶ Play with Selected Effect</button>
                     <br>
-                    <button id="dlActionBtn" class="btn-download" style="display:inline-block;" onclick="exportModifiedAudio()">💾 Download Modified Voice</button>
+                    <button id="dlActionBtn" class="btn-download" style="display:inline-block;" onclick="exportModifiedAudio()">💾 Download Audio File</button>
                 </div>
             </div>
 
@@ -84,13 +95,13 @@
             <p><strong>FreeAudioRecorder.com</strong> is a high-end web utility developed by <strong>Youssef</strong>. Unlike other tools that just play back sounds, our "Export Engine" renders the final file. When you click download, the AI recalculates the wave data using a <strong>Pitch-Shift algorithm</strong>, creating a brand new audio file with the modifications baked-in. This ensures that when you share the file, the "Chipmunk" or "Giant" effect stays exactly as you intended.</p>
             <p>Your privacy is protected as no audio ever leaves your computer. The entire rendering process happens within your browser's memory, making it a <strong>100% private</strong> lab environment.</p>
 
-            <h2>FAQ</h2>
+            <h2>Frequently Asked Questions</h2>
             <div id="faq-accordion">
-                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">1. Why is the download modified?</div><div class="faq-answer">Because our engine applies a permanent frequency shift to the exported file.</div></div>
-                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">2. Is it free?</div><div class="faq-answer">Yes, developed by Youssef as a free tool for the creative community.</div></div>
-                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">3. Does it work on mobile?</div><div class="faq-answer">Yes, it's fully responsive for Android and iOS.</div></div>
-                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">4. Is my data safe?</div><div class="faq-answer">100% safe. Everything is local to your browser.</div></div>
-                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">5. Can I use it commercially?</div><div class="faq-answer">Yes, feel free to use the output in your YouTube or TikTok videos.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">1. How many effects can I apply?</div><div class="faq-answer">Currently, 10 professional-grade AI style filters are available.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">2. Is my voice sent to a database?</div><div class="faq-answer">No. 100% of processing happens in your browser.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">3. Can I use these for YouTube?</div><div class="faq-answer">Yes, developed by Youssef as a free commercial tool.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">4. Is there a recording time limit?</div><div class="faq-answer">No hard limits, depends on your device memory.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">5. Does it work on phones?</div><div class="faq-answer">Yes, works on modern Android and iOS browsers.</div></div>
             </div>
         </section>
     </div>
@@ -98,7 +109,7 @@
     <div id="about" class="page-content">
         <section class="glass-card">
             <h2>About Us</h2>
-            <p>Founded by <strong>Youssef</strong>, we provide top-tier privacy-first audio solutions.</p>
+            <p>Established in March 2026 by <strong>Youssef</strong>, this USA-based platform is dedicated to providing high-quality, privacy-first audio tools.</p>
         </section>
     </div>
 
@@ -106,12 +117,31 @@
         <section class="glass-card">
             <h2>Contact Youssef</h2>
             <p>Email: <strong>youssefboukoucha7@gmail.com</strong></p>
-            <form action="https://formspree.io/f/mdapndnk" method="POST" style="display:flex;flex-direction:column;gap:10px;">
-                <input type="text" name="name" placeholder="Name" required style="padding:10px;border:1px solid #ddd;border-radius:8px;">
-                <input type="email" name="email" placeholder="Email" required style="padding:10px;border:1px solid #ddd;border-radius:8px;">
-                <textarea name="message" placeholder="How can we help?" rows="5" required style="padding:10px;border:1px solid #ddd;border-radius:8px;"></textarea>
-                <button type="submit" class="btn-primary">Send Message</button>
+            <form action="https://formspree.io/f/mdapndnk" method="POST" class="contact-form">
+                <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid #ddd;">
+                <textarea name="message" placeholder="Message" rows="4" style="padding:10px;border-radius:8px;border:1px solid #ddd;"></textarea>
+                <button type="submit" class="btn-primary" style="width:100%;">Send</button>
             </form>
+        </section>
+    </div>
+
+    <div id="privacy" class="page-content">
+        <section class="glass-card">
+            <h2>Privacy Policy</h2>
+            <ol>
+                <li><strong>Local Processing:</strong> All AI processing occurs locally.</li>
+                <li><strong>No Data Collection:</strong> We do not store or share voice files.</li>
+                <li><strong>Mic Access:</strong> Closed immediately after recording.</li>
+                <li><strong>USA Laws:</strong> Operated under standard USA data jurisdiction.</li>
+                <li><strong>Cookies:</strong> minimal cookies are used for free service via AdSense.</li>
+            </ol>
+        </section>
+    </div>
+
+    <div id="terms" class="page-content">
+        <section class="glass-card">
+            <h2>Terms of Service</h2>
+            <p>Effective Date: 25/03/2026. Services owned and developed by <strong>Youssef</strong>.</p>
         </section>
     </div>
 </main>
@@ -119,10 +149,11 @@
 <footer>
     <div class="footer-links">
         <a onclick="showPage('about')">About</a>
-        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('privacy')">Privacy Policy</a>
+        <a onclick="showPage('terms')">Terms</a>
         <a onclick="showPage('contact')">Contact</a>
     </div>
-    <p>© 2026 FreeAudioRecorder.com | Developed by Youssef</p>
+    <p style="font-size:12px; color:#94a3b8; margin-top:20px">© 2026 <strong>FreeAudioRecorder.com</strong>. Developed by <strong>Youssef</strong>. All Rights Reserved. USA.</p>
 </footer>
 
 <script>
@@ -140,6 +171,7 @@
     function showPage(id) {
         document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
         document.getElementById(id).style.display = 'block';
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
@@ -182,12 +214,10 @@
         player.start();
     }
 
-    // الدالة السحرية التي تقوم بتحميل الصوت معدلاً
     async function exportModifiedAudio() {
         if (!originalBuffer) return;
         document.getElementById('statusLabel').innerText = "● Processing Export...";
         
-        // إنشاء محرك رندرة غير متصل (Offline)
         const duration = originalBuffer.duration;
         const offlineCtx = new Tone.OfflineContext(2, duration, 44100);
         
@@ -196,32 +226,18 @@
         offlinePlayer.start(0);
 
         const renderedBuffer = await offlineCtx.render();
-        
-        // تحويل الـ Buffer المخرج إلى ملف قابل للتحميل
         const wav = bufferToWav(renderedBuffer);
         const blob = new Blob([wav], { type: 'audio/wav' });
         const url = URL.createObjectURL(blob);
         
         const link = document.createElement('a');
-        link.href = url;
-        link.download = `Modified_Voice_Youssef.wav`;
-        link.click();
-        document.getElementById('statusLabel').innerText = "● Downloaded!";
+        link.href = url; link.download = "Modified_Voice_Youssef.wav"; link.click();
+        document.getElementById('statusLabel').innerText = "● Ready";
     }
 
-    // تحويل البيانات الصوتية لملف WAV حقيقي
     function bufferToWav(abuffer) {
-        let numOfChan = abuffer.numberOfChannels,
-            length = abuffer.length * numOfChan * 2 + 44,
-            buffer = new ArrayBuffer(length),
-            view = new DataView(buffer),
-            channels = [], i, sample, offset = 0, pos = 0;
-
-        setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157);
-        setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan);
-        setUint32(abuffer.sampleRate); setUint32(abuffer.sampleRate * 2 * numOfChan);
-        setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);
-
+        let numOfChan = abuffer.numberOfChannels, length = abuffer.length * numOfChan * 2 + 44, buffer = new ArrayBuffer(length), view = new DataView(buffer), channels = [], i, sample, offset = 0, pos = 0;
+        setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157); setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan); setUint32(abuffer.sampleRate); setUint32(abuffer.sampleRate * 2 * numOfChan); setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);
         for (i = 0; i < abuffer.numberOfChannels; i++) channels.push(abuffer.getChannelData(i));
         while (pos < abuffer.length) {
             for (i = 0; i < numOfChan; i++) {
