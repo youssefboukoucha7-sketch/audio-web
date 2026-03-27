@@ -8,10 +8,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* إضافة أنماط مخصصة للتأثيرات */
         .effect-grid button.active { border-color: #3b82f6; background-color: #1e3a8a; color: white; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .faq-item.open .faq-answer { max-height: 200px; padding-top: 10px; }
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body class="bg-[#0f172a] text-white min-h-screen font-['Inter']">
@@ -19,7 +19,7 @@
     <nav class="border-b border-gray-800 p-6">
         <div class="container mx-auto flex justify-between items-center">
             <span class="text-2xl font-black text-blue-500 cursor-pointer" onclick="showPage('home')">FreeAudioRecorder.com</span>
-            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
+            <div class="flex gap-6 text-sm font-medium text-gray-400">
                 <a onclick="showPage('home')" class="hover:text-white cursor-pointer">Home</a>
                 <a onclick="showPage('about')" class="hover:text-white cursor-pointer">About</a>
                 <a onclick="showPage('contact')" class="hover:text-white cursor-pointer">Contact</a>
@@ -27,104 +27,83 @@
         </div>
     </nav>
 
-    <main id="home" class="container mx-auto px-4 py-12 text-center page-section">
+    <main id="home" class="container mx-auto px-4 py-12 text-center page-section active">
         <div class="max-w-4xl mx-auto h-24 bg-gray-900 border border-gray-800 rounded flex items-center justify-center text-gray-700 text-xs mb-10">
             ADVERTISEMENT UNIT
         </div>
 
         <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10 shadow-2xl">
             <h1 class="text-4xl font-bold mb-4 tracking-tight">AI Voice Lab</h1>
-            <p class="text-gray-400 mb-8">Developed by Youssef - Transform your voice instantly.</p>
+            <p class="text-gray-400 mb-8">Professional pitch-shifting technology by Youssef.</p>
 
             <div id="status" class="text-blue-400 font-mono mb-6 uppercase tracking-widest text-sm">Status: Ready</div>
 
             <div class="flex flex-col items-center gap-6">
-                <button id="recordBtn" class="w-20 h-20 bg-red-600 hover:bg-red-700 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95">
+                <button id="recordBtn" class="w-20 h-20 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95">
                     <div id="recordIcon" class="w-6 h-6 bg-white rounded-sm"></div>
                 </button>
 
                 <div class="w-full text-left mt-4">
-                    <label class="text-xs font-bold text-gray-500 mb-2 block uppercase">Select AI Effect:</label>
+                    <label class="text-xs font-bold text-gray-500 mb-2 block uppercase">Select Effect:</label>
                     <div class="grid grid-cols-3 gap-2 effect-grid">
                         <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs active" onclick="setEffect(0, this)">Normal</button>
                         <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs" onclick="setEffect(10, this)">Chipmunk</button>
                         <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs" onclick="setEffect(-7, this)">Deep Voice</button>
-                        <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs" onclick="setEffect(15, this)">Helium</button>
-                        <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs" onclick="setEffect(-12, this)">The Giant</button>
-                        <button class="bg-gray-800 border border-gray-700 p-2 rounded text-xs" onclick="setEffect(5, this)">Cartoon AI</button>
                     </div>
                 </div>
 
-                <div id="playerControls" class="hidden w-full space-y-4">
-                    <button onclick="playPreview()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-all">
-                        ▶ PREVIEW WITH EFFECT
-                    </button>
-                    <button onclick="exportAudio()" class="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-xl font-bold transition-all">
-                        💾 DOWNLOAD MODIFIED FILE
-                    </button>
+                <div id="playerControls" class="hidden w-full space-y-3">
+                    <button onclick="playPreview()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-all">▶ PREVIEW</button>
+                    <button onclick="exportAudio()" class="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-xl font-bold transition-all">💾 DOWNLOAD MODIFIED</button>
                 </div>
             </div>
         </div>
 
         <section class="max-w-4xl mx-auto mt-20 text-left border-t border-gray-800 pt-12">
-            <h2 class="text-2xl font-bold text-blue-500 mb-6">Advanced Voice Processing Technology</h2>
-            <div class="grid md:grid-cols-2 gap-8 text-gray-400 text-sm leading-relaxed">
-                <p>FreeAudioRecorder.com uses the latest <strong>Web Audio DSP</strong> (Digital Signal Processing) to manipulate audio buffers in real-time. Developed by Youssef, this laboratory allows you to shift the pitch and format of your recordings without losing clarity. Whether you need a professional voice-over or a fun character voice, our neural-inspired filters provide studio-grade results directly in your browser.</p>
-                <p>Security is our priority. Every recording is processed locally using your device's hardware. No audio data is ever transmitted to a server, ensuring your sessions remain 100% private and secure. This makes it the ideal tool for creators, developers, and privacy enthusiasts worldwide.</p>
-            </div>
-        </section>
-
-        <section class="max-w-2xl mx-auto mt-16 text-left">
-            <h2 class="text-xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-            <div class="space-y-4">
-                <div class="faq-item border border-gray-800 rounded-xl p-4 cursor-pointer" onclick="this.classList.toggle('open')">
-                    <div class="font-bold text-blue-400">1. Does the download include the effect?</div>
-                    <div class="faq-answer text-gray-500 text-sm">Yes! When you click 'Download Modified File', our engine renders the audio with your chosen effect applied.</div>
-                </div>
-                <div class="faq-item border border-gray-800 rounded-xl p-4 cursor-pointer" onclick="this.classList.toggle('open')">
-                    <div class="font-bold text-blue-400">2. Is this tool free to use?</div>
-                    <div class="faq-answer text-gray-500 text-sm">Absolutely. This project by Youssef is 100% free for everyone.</div>
-                </div>
-                <div class="faq-item border border-gray-800 rounded-xl p-4 cursor-pointer" onclick="this.classList.toggle('open')">
-                    <div class="font-bold text-blue-400">3. Where is my audio saved?</div>
-                    <div class="faq-answer text-gray-500 text-sm">It is saved directly to your device's memory. We do not store files on our servers.</div>
-                </div>
-                <div class="faq-item border border-gray-800 rounded-xl p-4 cursor-pointer" onclick="this.classList.toggle('open')">
-                    <div class="font-bold text-blue-400">4. Can I use this on a mobile phone?</div>
-                    <div class="faq-answer text-gray-500 text-sm">Yes, it works perfectly on modern browsers on both Android and iOS.</div>
-                </div>
-                <div class="faq-item border border-gray-800 rounded-xl p-4 cursor-pointer" onclick="this.classList.toggle('open')">
-                    <div class="font-bold text-blue-400">5. Is there a time limit?</div>
-                    <div class="faq-answer text-gray-500 text-sm">There is no hard limit. You can record as long as your device has RAM available.</div>
-                </div>
-            </div>
+            <h2 class="text-xl font-bold text-blue-500 mb-4">Neural Audio Processing</h2>
+            <p class="text-gray-400 text-sm leading-relaxed mb-6">Our tool uses high-fidelity digital signal processing to change voice attributes without losing quality. Your audio remains 100% private as it never leaves your browser.</p>
         </section>
     </main>
 
-    <main id="about" class="container mx-auto px-4 py-12 hidden page-section">
+    <main id="about" class="container mx-auto px-4 py-12 page-section">
         <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10">
-            <h2 class="text-2xl font-bold text-blue-500 mb-4">About FreeAudioRecorder.com</h2>
-            <p class="text-gray-400">Founded in 2026 by Youssef, this platform aims to democratize high-quality audio tools. Our mission is to provide professional AI-powered voice recording and transformation for free, with a focus on privacy and user experience.</p>
+            <h2 class="text-2xl font-bold text-blue-500 mb-4">About Us</h2>
+            <p class="text-gray-400">Developed by Youssef in 2026, FreeAudioRecorder.com provides pro-level audio tools for creators worldwide.</p>
         </div>
     </main>
 
-    <main id="contact" class="container mx-auto px-4 py-12 hidden page-section">
-        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10">
-            <h2 class="text-2xl font-bold text-blue-500 mb-6">Contact Youssef</h2>
+    <main id="contact" class="container mx-auto px-4 py-12 page-section">
+        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10 text-left">
+            <h2 class="text-2xl font-bold text-blue-500 mb-6 text-center">Contact Youssef</h2>
             <form action="https://formspree.io/f/mdapndnk" method="POST" class="flex flex-col gap-4">
-                <input type="email" name="email" placeholder="Your Email" class="bg-gray-800 border border-gray-700 p-3 rounded-xl focus:outline-none focus:border-blue-500 text-white" required>
-                <textarea name="message" placeholder="How can we help?" rows="5" class="bg-gray-800 border border-gray-700 p-3 rounded-xl focus:outline-none focus:border-blue-500 text-white" required></textarea>
+                <input type="text" name="name" placeholder="Full Name" class="bg-gray-800 border border-gray-700 p-3 rounded-xl text-white" required>
+                <input type="email" name="email" placeholder="Email Address" class="bg-gray-800 border border-gray-700 p-3 rounded-xl text-white" required>
+                <textarea name="message" placeholder="How can Youssef help you?" rows="5" class="bg-gray-800 border border-gray-700 p-3 rounded-xl text-white" required></textarea>
                 <button type="submit" class="bg-blue-600 py-3 rounded-xl font-bold hover:bg-blue-500 transition-all">Send Message</button>
             </form>
         </div>
     </main>
 
+    <main id="privacy" class="container mx-auto px-4 py-12 page-section">
+        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10">
+            <h2 class="text-2xl font-bold text-blue-500 mb-4">Privacy Policy</h2>
+            <p class="text-gray-400 text-sm">Your audio data is processed locally. We do not store or transmit your voice recordings.</p>
+        </div>
+    </main>
+
+    <main id="terms" class="container mx-auto px-4 py-12 page-section">
+        <div class="max-w-2xl mx-auto bg-gray-900 border border-gray-700 rounded-3xl p-10">
+            <h2 class="text-2xl font-bold text-blue-500 mb-4">Terms of Service</h2>
+            <p class="text-gray-400 text-sm">Free to use for personal and commercial projects. Owned by Youssef.</p>
+        </div>
+    </main>
+
     <footer class="border-t border-gray-800 py-12 mt-20">
         <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center gap-8 mb-6 text-sm text-gray-500">
+            <div class="flex justify-center flex-wrap gap-6 mb-6 text-sm text-gray-500">
                 <a onclick="showPage('about')" class="hover:text-white cursor-pointer">About</a>
-                <a onclick="showPage('home')" class="hover:text-white cursor-pointer">Privacy Policy</a>
-                <a onclick="showPage('home')" class="hover:text-white cursor-pointer">Terms</a>
+                <a onclick="showPage('privacy')" class="hover:text-white cursor-pointer">Privacy Policy</a>
+                <a onclick="showPage('terms')" class="hover:text-white cursor-pointer">Terms</a>
                 <a onclick="showPage('contact')" class="hover:text-white cursor-pointer">Contact</a>
             </div>
             <p class="text-xs text-gray-600">© 2026 FreeAudioRecorder.com | Developed by Youssef. USA.</p>
@@ -133,8 +112,7 @@
 
     <script>
         let mediaRecorder, chunks = [], originalBuffer, player, pitchShift;
-        let isRecording = false;
-        let selectedShift = 0;
+        let isRecording = false, selectedShift = 0;
 
         async function initAudio() {
             await Tone.start();
@@ -145,8 +123,8 @@
         }
 
         function showPage(id) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             window.scrollTo(0, 0);
         }
 
@@ -157,10 +135,9 @@
             if (pitchShift) pitchShift.pitch = selectedShift;
         }
 
-        const recordBtn = document.getElementById('recordBtn');
-        const status = document.getElementById('status');
-
-        recordBtn.onclick = async () => {
+        document.getElementById('recordBtn').onclick = async function() {
+            const status = document.getElementById('status');
+            const btn = this;
             if (!isRecording) {
                 await initAudio();
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -169,33 +146,26 @@
                 mediaRecorder.ondataavailable = e => chunks.push(e.data);
                 mediaRecorder.onstop = async () => {
                     const blob = new Blob(chunks, { type: 'audio/webm' });
-                    const url = URL.createObjectURL(blob);
-                    originalBuffer = await player.load(url);
+                    originalBuffer = await player.load(URL.createObjectURL(blob));
                     document.getElementById('playerControls').classList.remove('hidden');
                     status.innerText = "Status: Processed";
                 };
                 mediaRecorder.start();
                 isRecording = true;
                 status.innerText = "Status: Recording...";
-                status.classList.replace('text-blue-400', 'text-red-500');
-                recordBtn.classList.add('animate-pulse');
+                btn.classList.add('animate-pulse');
             } else {
                 mediaRecorder.stop();
                 isRecording = false;
-                status.classList.replace('text-red-500', 'text-green-400');
-                recordBtn.classList.remove('animate-pulse');
+                btn.classList.remove('animate-pulse');
             }
         };
 
-        async function playPreview() {
-            await initAudio();
-            if (player.state === "started") player.stop();
-            player.start();
-        }
+        async function playPreview() { await initAudio(); player.start(); }
 
         async function exportAudio() {
             if (!originalBuffer) return;
-            status.innerText = "Processing Export...";
+            document.getElementById('status').innerText = "Processing Export...";
             const offlineCtx = new Tone.OfflineContext(2, originalBuffer.duration, 44100);
             const offlinePitch = new Tone.PitchShift(selectedShift).toDestination();
             const offlinePlayer = new Tone.Player(originalBuffer).connect(offlinePitch);
@@ -203,10 +173,11 @@
             const renderedBuffer = await offlineCtx.render();
             const wav = bufferToWav(renderedBuffer);
             const blob = new Blob([wav], { type: 'audio/wav' });
-            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = url; link.download = "AI_Voice_Export.wav"; link.click();
-            status.innerText = "Status: Downloaded";
+            link.href = URL.createObjectURL(blob);
+            link.download = "Modified_Voice.wav";
+            link.click();
+            document.getElementById('status').innerText = "Status: Ready";
         }
 
         function bufferToWav(abuffer) {
