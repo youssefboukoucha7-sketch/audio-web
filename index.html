@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeAudioRecorder.com - Professional AI Voice Lab</title>
+    <title>FreeAudioRecorder.com - AI Voice Lab</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,39 +13,24 @@
         nav { display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto; padding: 0 20px; align-items: center; }
         .logo { font-weight: 700; color: var(--primary-color); text-decoration: none; font-size: 19px; cursor: pointer; }
         .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; }
-        .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; cursor: pointer; font-size: 14px; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary-color); }
-        
+        .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; cursor: pointer; font-size: 14px; }
         main { max-width: 850px; margin: 40px auto; padding: 0 20px; min-height: 75vh; }
         .glass-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 25px; }
         .page-content { display: none; }
         .active { display: block; }
-        
-        /* Recorder UI */
         .recorder-zone { text-align: center; background: #f1f5f9; padding: 30px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0; }
-        .btn-primary { background: var(--primary-color); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .btn-stop { background: #1e293b; color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; }
-        .btn-play { background: var(--accent); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; margin-top: 10px; }
-        .btn-download { background: #10b981; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; display: none; margin: 20px auto; width: fit-content; font-weight: 700; }
-        
+        .btn-primary { background: var(--primary-color); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-play { background: var(--accent); color: white; padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; font-weight: 700; }
+        .btn-download { background: #10b981; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; display: none; margin: 20px auto; width: fit-content; font-weight: 700; cursor: pointer; }
         .effects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 15px; }
         .effect-card { padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: white; font-weight: 600; font-size: 12px; }
         .effect-card.active { border-color: var(--primary-color); background: #eff6ff; color: var(--primary-color); }
-
-        /* FAQ Accordion */
         .faq-item { margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
         .faq-question { background: #fff; padding: 15px; cursor: pointer; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: #f8fafc; font-size: 14px; color: #64748b; }
+        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: #f8fafc; font-size: 14px; }
         .faq-item.open .faq-answer { max-height: 250px; padding: 15px; }
-        .faq-question::after { content: "+"; color: var(--primary-color); font-size: 18px; }
-        .faq-item.open .faq-question::after { content: "−"; }
-
-        /* Contact Form */
-        .contact-form input, .contact-form textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        
         footer { background: #f1f5f9; padding: 40px 20px; text-align: center; border-top: 1px solid #e2e8f0; margin-top: 60px; }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: #64748b; text-decoration: none; margin: 0 12px; font-size: 13px; font-weight: 500; cursor: pointer; }
+        .footer-links a { color: #64748b; text-decoration: none; margin: 0 12px; font-size: 13px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -65,15 +50,15 @@
     <div id="home" class="page-content active">
         <section class="glass-card">
             <h1 style="text-align:center">AI Voice Transformation Lab</h1>
-            <p style="text-align:center; color:#64748b;">Professional Pitch-Shifting Developed by Youssef</p>
+            <p style="text-align:center; color:#64748b;">Developed by Youssef - Pro Audio Export</p>
             
             <div class="recorder-zone">
                 <p id="statusLabel" style="font-weight:700; color:var(--primary-color);">● System Ready</p>
                 <button id="startBtn" class="btn-primary" onclick="startRecording()">🔴 Start Recording</button>
-                <button id="stopBtn" class="btn-stop" style="display:none;" onclick="stopRecording()">⬛ Stop & Process</button>
+                <button id="stopBtn" class="btn-primary" style="background:#1e293b; display:none;" onclick="stopRecording()">⬛ Stop & Process</button>
                 
                 <div style="margin-top:25px; text-align:left;">
-                    <span style="font-size:12px; font-weight:700; color:#64748b;">SELECT AI VOICE FILTER:</span>
+                    <span style="font-size:12px; font-weight:700; color:#64748b;">SELECT EFFECT BEFORE DOWNLOAD:</span>
                     <div class="effects-grid">
                         <div class="effect-card active" onclick="setEffect(0, this)">Normal</div>
                         <div class="effect-card" onclick="setEffect(10, this)">Chipmunk</div>
@@ -89,46 +74,31 @@
                 </div>
 
                 <div id="playerContainer" style="margin-top:25px; display:none;">
-                    <button class="btn-play" onclick="playWithEffect()">▶ Play with Effect</button>
+                    <button class="btn-play" onclick="playWithEffect()">▶ Preview Effect</button>
                     <br>
-                    <a id="downloadBtn" class="btn-download">💾 Download Audio File</a>
+                    <button id="dlActionBtn" class="btn-download" style="display:inline-block;" onclick="exportModifiedAudio()">💾 Download Modified Voice</button>
                 </div>
             </div>
 
             <h2>How FreeAudioRecorder.com Works</h2>
-            <p><strong>FreeAudioRecorder.com</strong> is a high-end web utility developed by <strong>Youssef</strong> that bridge the gap between simple recording and complex audio engineering. By leveraging the <strong>Web Audio API</strong>, the tool manipulates the "Pitch" and "Formants" of your voice in real-time. This means when you select "Chipmunk," the AI recalculates the audio frequency to be higher, whereas "Deep Voice" stretches the waves for a low-frequency output.</p>
-            <p>Our infrastructure is built for speed; there is no buffering or server-side processing. This ensures that creators can experiment with different personas instantly, whether for gaming, podcasts, or digital storytelling. Your privacy is protected as no audio ever leaves your computer, making it a <strong>100% private</strong> and secure environment.</p>
+            <p><strong>FreeAudioRecorder.com</strong> is a high-end web utility developed by <strong>Youssef</strong>. Unlike other tools that just play back sounds, our "Export Engine" renders the final file. When you click download, the AI recalculates the wave data using a <strong>Pitch-Shift algorithm</strong>, creating a brand new audio file with the modifications baked-in. This ensures that when you share the file, the "Chipmunk" or "Giant" effect stays exactly as you intended.</p>
+            <p>Your privacy is protected as no audio ever leaves your computer. The entire rendering process happens within your browser's memory, making it a <strong>100% private</strong> lab environment.</p>
 
-            <h2>Frequently Asked Questions</h2>
+            <h2>FAQ</h2>
             <div id="faq-accordion">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">1. Is the voice change permanent on the download?</div>
-                    <div class="faq-answer">Yes, when you apply an effect and listen to it in the player, the download button will provide the file with that specific transformation applied.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">2. Is my voice data stored on your servers?</div>
-                    <div class="faq-answer">No. Privacy is the core of FreeAudioRecorder.com. All processing happens on your local machine; we never upload or store your audio.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">3. Does it work on mobile phones?</div>
-                    <div class="faq-answer">Yes, it is fully responsive and works on modern Android and iOS browsers that support microphone and Web Audio access.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">4. What is the maximum recording length?</div>
-                    <div class="faq-answer">There are no hard limits set by the platform. It depends solely on your device's available memory (RAM) to hold the audio buffer.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">5. Can I use these recordings commercially?</div>
-                    <div class="faq-answer">Yes, the tool provided by Youssef is free for both personal and commercial projects like YouTube videos and podcasts.</div>
-                </div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">1. Why is the download modified?</div><div class="faq-answer">Because our engine applies a permanent frequency shift to the exported file.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">2. Is it free?</div><div class="faq-answer">Yes, developed by Youssef as a free tool for the creative community.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">3. Does it work on mobile?</div><div class="faq-answer">Yes, it's fully responsive for Android and iOS.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">4. Is my data safe?</div><div class="faq-answer">100% safe. Everything is local to your browser.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">5. Can I use it commercially?</div><div class="faq-answer">Yes, feel free to use the output in your YouTube or TikTok videos.</div></div>
             </div>
         </section>
     </div>
 
     <div id="about" class="page-content">
         <section class="glass-card">
-            <h2>About FreeAudioRecorder.com</h2>
-            <p>Established in March 2026 by <strong>Youssef</strong>, this USA-based platform is dedicated to providing high-quality, privacy-first audio tools. We believe that powerful AI technology should be accessible to everyone through a browser.</p>
+            <h2>About Us</h2>
+            <p>Founded by <strong>Youssef</strong>, we provide top-tier privacy-first audio solutions.</p>
         </section>
     </div>
 
@@ -136,32 +106,12 @@
         <section class="glass-card">
             <h2>Contact Youssef</h2>
             <p>Email: <strong>youssefboukoucha7@gmail.com</strong></p>
-            <form action="https://formspree.io/f/mdapndnk" method="POST" class="contact-form">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="How can Youssef help you?" rows="5" required></textarea>
-                <button type="submit" class="btn-primary" style="width:100%;">Send Message</button>
+            <form action="https://formspree.io/f/mdapndnk" method="POST" style="display:flex;flex-direction:column;gap:10px;">
+                <input type="text" name="name" placeholder="Name" required style="padding:10px;border:1px solid #ddd;border-radius:8px;">
+                <input type="email" name="email" placeholder="Email" required style="padding:10px;border:1px solid #ddd;border-radius:8px;">
+                <textarea name="message" placeholder="How can we help?" rows="5" required style="padding:10px;border:1px solid #ddd;border-radius:8px;"></textarea>
+                <button type="submit" class="btn-primary">Send Message</button>
             </form>
-        </section>
-    </div>
-
-    <div id="privacy" class="page-content">
-        <section class="glass-card">
-            <h2>Privacy Policy</h2>
-            <ol>
-                <li><strong>Local Processing:</strong> All audio processing occurs strictly in your browser.</li>
-                <li><strong>No Storage:</strong> Your voice recordings are never stored on our servers.</li>
-                <li><strong>Mic Security:</strong> Access is closed immediately after recording.</li>
-                <li><strong>USA Laws:</strong> We comply with all relevant data protection standards.</li>
-                <li><strong>Cookies:</strong> We use minimal cookies to maintain our free service via AdSense.</li>
-            </ol>
-        </section>
-    </div>
-
-    <div id="terms" class="page-content">
-        <section class="glass-card">
-            <h2>Terms of Service</h2>
-            <p>Effective Date: 25/03/2026. This service is owned and operated by <strong>Youssef</strong>.</p>
         </section>
     </div>
 </main>
@@ -169,15 +119,14 @@
 <footer>
     <div class="footer-links">
         <a onclick="showPage('about')">About</a>
-        <a onclick="showPage('privacy')">Privacy Policy</a>
-        <a onclick="showPage('terms')">Terms</a>
+        <a onclick="showPage('home')">Home</a>
         <a onclick="showPage('contact')">Contact</a>
     </div>
-    <p style="font-size:12px; color:#94a3b8; margin-top:20px">© 2026 <strong>FreeAudioRecorder.com</strong>. Developed by <strong>Youssef</strong>. USA.</p>
+    <p>© 2026 FreeAudioRecorder.com | Developed by Youssef</p>
 </footer>
 
 <script>
-    let recorder, chunks = [], player, pitchShift;
+    let recorder, chunks = [], player, pitchShift, originalBuffer;
     let selectedShift = 0;
 
     async function initAudio() {
@@ -191,12 +140,9 @@
     function showPage(id) {
         document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
         document.getElementById(id).style.display = 'block';
-        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    function toggleFaq(el) {
-        el.parentElement.classList.toggle('open');
-    }
+    function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
 
     function setEffect(shift, el) {
         document.querySelectorAll('.effect-card').forEach(c => c.classList.remove('active'));
@@ -214,11 +160,8 @@
         recorder.onstop = async () => {
             const blob = new Blob(chunks, { type: 'audio/webm' });
             const url = URL.createObjectURL(blob);
-            await player.load(url);
+            originalBuffer = await player.load(url);
             document.getElementById('playerContainer').style.display = 'block';
-            document.getElementById('downloadBtn').href = url;
-            document.getElementById('downloadBtn').download = "my_voice.webm";
-            document.getElementById('downloadBtn').style.display = "inline-block";
             document.getElementById('statusLabel').innerText = "● Ready";
         };
         recorder.start();
@@ -237,6 +180,60 @@
         await initAudio();
         if (player.state === "started") player.stop();
         player.start();
+    }
+
+    // الدالة السحرية التي تقوم بتحميل الصوت معدلاً
+    async function exportModifiedAudio() {
+        if (!originalBuffer) return;
+        document.getElementById('statusLabel').innerText = "● Processing Export...";
+        
+        // إنشاء محرك رندرة غير متصل (Offline)
+        const duration = originalBuffer.duration;
+        const offlineCtx = new Tone.OfflineContext(2, duration, 44100);
+        
+        const offlinePitch = new Tone.PitchShift(selectedShift).toDestination();
+        const offlinePlayer = new Tone.Player(originalBuffer).connect(offlinePitch);
+        offlinePlayer.start(0);
+
+        const renderedBuffer = await offlineCtx.render();
+        
+        // تحويل الـ Buffer المخرج إلى ملف قابل للتحميل
+        const wav = bufferToWav(renderedBuffer);
+        const blob = new Blob([wav], { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Modified_Voice_Youssef.wav`;
+        link.click();
+        document.getElementById('statusLabel').innerText = "● Downloaded!";
+    }
+
+    // تحويل البيانات الصوتية لملف WAV حقيقي
+    function bufferToWav(abuffer) {
+        let numOfChan = abuffer.numberOfChannels,
+            length = abuffer.length * numOfChan * 2 + 44,
+            buffer = new ArrayBuffer(length),
+            view = new DataView(buffer),
+            channels = [], i, sample, offset = 0, pos = 0;
+
+        setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157);
+        setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan);
+        setUint32(abuffer.sampleRate); setUint32(abuffer.sampleRate * 2 * numOfChan);
+        setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);
+
+        for (i = 0; i < abuffer.numberOfChannels; i++) channels.push(abuffer.getChannelData(i));
+        while (pos < abuffer.length) {
+            for (i = 0; i < numOfChan; i++) {
+                sample = Math.max(-1, Math.min(1, channels[i][pos]));
+                sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+                view.setInt16(44 + offset, sample, true); offset += 2;
+            }
+            pos++;
+        }
+        return buffer;
+        function setUint16(data) { view.setUint16(pos, data, true); pos += 2; }
+        function setUint32(data) { view.setUint32(pos, data, true); pos += 4; }
     }
 </script>
 </body>
