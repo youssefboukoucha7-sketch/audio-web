@@ -1,0 +1,23 @@
+{
+  "name": "audio-web",
+  "version": "1.0.0",
+  "description": "Free Audio Recorder - AI Voice Lab with Vercel Web Analytics",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"No tests configured for static site\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youssefboukoucha7-sketch/audio-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/youssefboukoucha7-sketch/audio-web/issues"
+  },
+  "homepage": "https://github.com/youssefboukoucha7-sketch/audio-web#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
